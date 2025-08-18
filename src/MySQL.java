@@ -1,42 +1,34 @@
 import java.sql.*;
 import java.sql.DriverManager;
 
-class mySQL {
-    String url, databaseName, databaseUsername, databasePassword = "";
+public class MySQL {
+    String url, databaseUsername, databasePassword = "";
     Connection conn;
     PreparedStatement stmt;
     String query, whereSQL, tableBind = "";
 
-    public mySQL(String host, String dbName, String dbUsername, String dbPassword) throws SQLException {
+    public MySQL(String host, String dbName, String dbUsername, String dbPassword) throws SQLException {
         url = "jdbc:mysql://"+host+"/" + dbName + "?useSSL=false&serverTimezone=Asia/Manila";
         databaseUsername = dbUsername;
         databasePassword = dbPassword;
 
-        try {
-            conn = DriverManager.getConnection(url, databaseUsername, databasePassword);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        try {conn = DriverManager.getConnection(url, databaseUsername, databasePassword);}
+        catch (SQLException e) {throw new RuntimeException(e);}
     }
 
-    public mySQL(String dbName){
+    public MySQL(String dbName){
         url = "jdbc:mysql://localhost:3306/" + dbName + "?useSSL=false&serverTimezone=Asia/Manila";
         databaseUsername = "root";
         databasePassword = "";
-        try {
-            conn = DriverManager.getConnection(url, databaseUsername, databasePassword);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        try {conn = DriverManager.getConnection(url, databaseUsername, databasePassword);}
+        catch (SQLException e) {throw new RuntimeException(e);}
     }
 
     public ResultSet selectSQL(String data) throws SQLException {
         try{
             stmt = conn.prepareStatement(data);
             return stmt.executeQuery();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (SQLException e) {throw new RuntimeException(e);}
     }
 
     /*
@@ -180,5 +172,4 @@ class mySQL {
         catch (SQLException e) {throw new RuntimeException(e);}
     }
 
-    static void echo(String data){System.out.println(data);}
 }

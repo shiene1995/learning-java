@@ -16,5 +16,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="bouncycastle.bcprov.jdk18on" level="project" />
   </component>
 </module>

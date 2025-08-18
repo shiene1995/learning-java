@@ -136,7 +136,7 @@ public class Simple_Calculator extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false); // this is how to hide form
-                new login(); // open new form
+                new Login(); // open new form
             }
         });
         cButton.addActionListener(new ActionListener() { //ERASE ALL
