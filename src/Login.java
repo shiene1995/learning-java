@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -10,10 +9,10 @@ public class Login extends JFrame {
     static String passwordHash = "";
     static String saltHash = "";
 
-    private JTextField textField1;
-    private JButton enterButton;
+    private JTextField usernameInput;
+    private JButton loginButton;
     private JPanel swing_test_Panel; //I should give name for Jpanel to call in setContentPane
-    private JPasswordField passwordField1;
+    private JPasswordField passwordInput;
 
     public Login(){
         setContentPane(swing_test_Panel); //this is how to call Jpanel
@@ -23,13 +22,13 @@ public class Login extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        enterButton.addActionListener(new ActionListener() {
+        loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MySQL mySQLConnection = new MySQL("db_ciicc"); //CREATE CONNECTION TO MySQL
 
-                String username = textField1.getText(); //this is how to get data in textfield
-                char[] passwordChars = passwordField1.getPassword(); //this is how to get data in passwordField
+                String username = usernameInput.getText(); //this is how to get data in textfield
+                char[] passwordChars = passwordInput.getPassword(); //this is how to get data in passwordField
                 String password = new String(passwordChars); //converting characters to String
 
                 boolean usernameFilter = InputFilterUtils.isValidUsername(username);
@@ -63,19 +62,20 @@ public class Login extends JFrame {
             }
         });
 
-        textField1.addActionListener(new ActionListener() {
+        usernameInput.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                enterButton.doClick();
+                loginButton.doClick();
             }
         });
-        passwordField1.addActionListener(new ActionListener() {
+        passwordInput.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                enterButton.doClick();
+                loginButton.doClick();
             }
         });
     }
     public void alert(String data){JOptionPane.showMessageDialog(this, data);} //ALERT LIKE IN JAVASCRIPT
-    public void clearInput(){alert("INVALID USERNAME OR PASSWORD!");textField1.setText("");passwordField1.setText("");}
+    public void clearInput(){alert("INVALID USERNAME OR PASSWORD!");
+        usernameInput.setText("");passwordInput.setText("");}
 }

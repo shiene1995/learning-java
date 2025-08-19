@@ -5,30 +5,30 @@ import java.text.DecimalFormat;
 
 public class Simple_Calculator extends JFrame {
     private JPanel MainPanel; //I should give name for Jpanel to call in setContentPane
-    private JTextField textField1;
-    private JButton a7Button;
-    private JButton a8Button;
-    private JButton a9Button;
-    private JButton button4;
-    private JButton a4Button;
-    private JButton a5Button;
-    private JButton a6Button;
-    private JButton xButton;
-    private JButton a1Button;
-    private JButton a2Button;
-    private JButton a3Button;
-    private JButton button5;
-    private JButton a0Button;
-    private JButton button7;
-    private JButton button8;
-    private JButton button9;
-    private JButton cButton;
+    private JTextField textField;
+    private JButton sevenButton;
+    private JButton eightButton;
+    private JButton nineButton;
+    private JButton devideButton;
+    private JButton fourButton;
+    private JButton fiveButton;
+    private JButton sixButton;
+    private JButton multiplyButton;
+    private JButton oneButton;
+    private JButton twoButton;
+    private JButton threeButton;
+    private JButton substractionButton;
+    private JButton zeroButton;
+    private JButton decimalButton;
+    private JButton equalButton;
+    private JButton additionButton;
+    private JButton clearButton;
     private JButton loginFormButton;
 
     String numberContainer1 = "0";
     String operatorsContainer = "0";
+    boolean operatorsStatus = false;
     boolean decimal = false;
-
 
     public Simple_Calculator(){
         setContentPane(MainPanel); //this is how to call Jpanel
@@ -38,97 +38,99 @@ public class Simple_Calculator extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        a0Button.addActionListener(new ActionListener() { // button 0
+        zeroButton.addActionListener(new ActionListener() { // button 0
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (textField1.getText().equals("0") || !operatorsContainer.isEmpty() && decimal == false){textField1.setText("");}
-                textField1.setText(textField1.getText() + "0");
+                clearInput();
+                textField.setText(textField.getText() + "0");
             }
         });
 
-        a1Button.addActionListener(new ActionListener() { // button 1
+        oneButton.addActionListener(new ActionListener() { // button 1
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (textField1.getText().equals("0") || !operatorsContainer.isEmpty() && decimal == false){textField1.setText("");}
-                textField1.setText(textField1.getText() + "1");
+                clearInput();
+                textField.setText(textField.getText() + "1");
             }
         });
 
-        a2Button.addActionListener(new ActionListener() { // button 2
+        twoButton.addActionListener(new ActionListener() { // button 2
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (textField1.getText().equals("0") || !operatorsContainer.isEmpty() && decimal == false){textField1.setText("");}
-                textField1.setText(textField1.getText() + "2");
+                clearInput();
+                textField.setText(textField.getText() + "2");
             }
         });
 
-        a3Button.addActionListener(new ActionListener() { // button 3
+        threeButton.addActionListener(new ActionListener() { // button 3
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (textField1.getText().equals("0") || !operatorsContainer.isEmpty() && decimal == false){textField1.setText("");}
-                textField1.setText(textField1.getText() + "3");
+                clearInput();
+                textField.setText(textField.getText() + "3");
             }
         });
 
-        a4Button.addActionListener(new ActionListener() {
+        fourButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (textField1.getText().equals("0") || !operatorsContainer.isEmpty() && decimal == false){textField1.setText("");}
-                textField1.setText(textField1.getText() + "4");
+                clearInput();
+                textField.setText(textField.getText() + "4");
             }
         });
 
-        a5Button.addActionListener(new ActionListener() {
+        fiveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (textField1.getText().equals("0") || !operatorsContainer.isEmpty() && decimal == false){textField1.setText("");}
-                textField1.setText(textField1.getText() + "5");
+                clearInput();
+                textField.setText(textField.getText() + "5");
             }
         });
 
-        a6Button.addActionListener(new ActionListener() {
+        sixButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (textField1.getText().equals("0") || !operatorsContainer.isEmpty() && decimal == false){textField1.setText("");}
-                textField1.setText(textField1.getText() + "6");
+                clearInput();
+                textField.setText(textField.getText() + "6");
             }
         });
 
-        a7Button.addActionListener(new ActionListener() {
+        sevenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (textField1.getText().equals("0") || !operatorsContainer.isEmpty() && decimal == false){textField1.setText("");}
-                textField1.setText(textField1.getText() + "7");
+                clearInput();
+                textField.setText(textField.getText() + "7");
             }
         });
 
-        a8Button.addActionListener(new ActionListener() {
+        eightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (textField1.getText().equals("0") || !operatorsContainer.isEmpty() && decimal == false){textField1.setText("");}
-                textField1.setText(textField1.getText() + "8");
+                clearInput();
+                textField.setText(textField.getText() + "8");
             }
         });
 
-        a9Button.addActionListener(new ActionListener() {
+        nineButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (textField1.getText().equals("0") || !operatorsContainer.isEmpty() && decimal == false){textField1.setText("");}
-                textField1.setText(textField1.getText() + "9");
+                clearInput();
+                textField.setText(textField.getText() + "9");
             }
         });
-        button7.addActionListener(new ActionListener() {
+        decimalButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!decimal && numberContainer1.isEmpty() || !numberContainer1.equals(textField1.getText())){
-                textField1.setText(textField1.getText() + ".");
+
+                if (!decimal && !textField.equals("0")){
+                textField.setText(textField.getText() + ".");
                 decimal = true;
                 }
-                else
+                else if (textField.equals("0"))
                 {
-                    textField1.setText("0.");
+                    textField.setText("0.");
                     decimal = true;
                 }
+
             }
         });
 
@@ -139,95 +141,48 @@ public class Simple_Calculator extends JFrame {
                 new Login(); // open new form
             }
         });
-        cButton.addActionListener(new ActionListener() { //ERASE ALL
+        clearButton.addActionListener(new ActionListener() { //ERASE ALL
             @Override
             public void actionPerformed(ActionEvent e) {
-                textField1.setText("0");
+                textField.setText("0");
                 numberContainer1 = "0";
-                operatorsContainer = "";
+                operatorsContainer = "0";
                 decimal = false;
+                operatorsStatus = false;
             }
         });
-        button4.addActionListener(new ActionListener() {
+        devideButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!textField1.getText().equals("0") && numberContainer1.equals("0")) {
-                    operatorsContainer = "/";
-                    numberContainer1 = textField1.getText();
-                    textField1.setText("0");
-                    decimal = false;
-                }
-                else
-                {
-                    button8.doClick();
-                    operatorsContainer = "+";
-                    numberContainer1 = textField1.getText();
-                    decimal = false;
-                }
+                setOperatorsContainer("/");
             }
         });
-        xButton.addActionListener(new ActionListener() {
+        multiplyButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!textField1.getText().equals("0") && numberContainer1.equals("0")) {
-                    operatorsContainer = "x";
-                    numberContainer1 = textField1.getText();
-                    textField1.setText("0");
-                    decimal = false;
-                }
-                else
-                {
-                    button8.doClick();
-                    operatorsContainer = "+";
-                    numberContainer1 = textField1.getText();
-                    decimal = false;
-                }
+                setOperatorsContainer("x");
             }
         });
-        button5.addActionListener(new ActionListener() {
+        substractionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!textField1.getText().equals("0") && numberContainer1.equals("0")) {
-                    operatorsContainer = "-";
-                    numberContainer1 = textField1.getText();
-                    textField1.setText("0");
-                    decimal = false;
-                }
-                else
-                {
-                    button8.doClick();
-                    operatorsContainer = "+";
-                    numberContainer1 = textField1.getText();
-                    decimal = false;
-                }
+                setOperatorsContainer("-");
             }
         });
-        button9.addActionListener(new ActionListener() {
+        additionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!textField1.getText().equals("0") && numberContainer1.equals("0")) {
-                    operatorsContainer = "+";
-                    numberContainer1 = textField1.getText();
-                    textField1.setText("0");
-                    decimal = false;
-                }
-                else
-                {
-                    button8.doClick();
-                    operatorsContainer = "+";
-                    numberContainer1 = textField1.getText();
-                    decimal = false;
-                }
+                setOperatorsContainer("+");
             }
         });
 
-        button8.addActionListener(new ActionListener() { //EQUAL BUTTON
+        equalButton.addActionListener(new ActionListener() { //EQUAL BUTTON
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!numberContainer1.equals("0") && !textField1.getText().equals("0"))
+                if (!numberContainer1.equals("0") && !textField.getText().equals("0"))
                 {
                     double number1 = Double.parseDouble(numberContainer1);
-                    double number2 = Double.parseDouble(textField1.getText());
+                    double number2 = Double.parseDouble(textField.getText());
                     double answer = 0;
 
                     // convert 4.0 to 4
@@ -242,10 +197,11 @@ public class Simple_Calculator extends JFrame {
                         default -> answer;
                     };
 
-                    textField1.setText(String.valueOf(df.format(answer)));
+                    textField.setText(String.valueOf(df.format(answer)));
                     numberContainer1 = "0";
-                    operatorsContainer = "";
+                    operatorsContainer = "0";
                     decimal = false;
+                    operatorsStatus = false;
 
                 }
             }
@@ -253,4 +209,23 @@ public class Simple_Calculator extends JFrame {
     }
 
     public void alert(String data){JOptionPane.showMessageDialog(Simple_Calculator.this, data);} //ALERT LIKE IN JAVA
+    public void clearInput(){
+        if (textField.getText().equals("0")){textField.setText("");}
+        else if (!operatorsContainer.equals("0") && !operatorsStatus){textField.setText("");operatorsStatus = true;}
+    }
+    public void setOperatorsContainer(String data){
+        if (!textField.getText().equals("0") && numberContainer1.equals("0")) {
+            operatorsContainer = data;
+            numberContainer1 = textField.getText();
+            //textField.setText("0");
+            decimal = false;
+        }
+        else
+        {
+            equalButton.doClick();
+            operatorsContainer = data;
+            numberContainer1 = textField.getText();
+            decimal = false;
+        }
+    }
 }

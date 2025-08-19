@@ -6,7 +6,8 @@ import java.sql.*;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        new Login();
+        //new Login();
+        new Simple_Calculator();
 
         echo(33); //I shorten the System.out.print();
         echo("Hello");

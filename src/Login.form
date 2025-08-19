@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="be414" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+      <component id="be414" class="javax.swing.JTextField" binding="usernameInput">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="40"/>
@@ -49,7 +49,7 @@
           <text value="LOGIN"/>
         </properties>
       </component>
-      <component id="852eb" class="javax.swing.JButton" binding="enterButton" default-binding="true">
+      <component id="852eb" class="javax.swing.JButton" binding="loginButton">
         <constraints>
           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="40"/>
@@ -63,7 +63,7 @@
           <text value="Login"/>
         </properties>
       </component>
-      <component id="a847b" class="javax.swing.JPasswordField" binding="passwordField1" default-binding="true">
+      <component id="a847b" class="javax.swing.JPasswordField" binding="passwordInput">
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="40"/>
