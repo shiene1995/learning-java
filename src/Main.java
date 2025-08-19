@@ -30,7 +30,8 @@ public class Main {
 
         //if (rs1 > 0) {echo("SUCCESS");}
 
-        mySQLConnection.closeConnection(); //always closed the connection!
+        rs.close();
+        mySQLConnection.close(); //always closed the connection!
 
     }
 

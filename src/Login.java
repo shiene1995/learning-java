@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Login extends JFrame {
+    static String usernameDB = "";
     static String passwordHash = "";
     static String saltHash = "";
 
@@ -25,36 +26,40 @@ public class Login extends JFrame {
         enterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MySQL mySQLConnection = new MySQL("db_ciicc");
+                MySQL mySQLConnection = new MySQL("db_ciicc"); //CREATE CONNECTION TO MySQL
 
                 String username = textField1.getText(); //this is how to get data in textfield
                 char[] passwordChars = passwordField1.getPassword(); //this is how to get data in passwordField
-                String password = new String(passwordChars); //converting character to String
+                String password = new String(passwordChars); //converting characters to String
 
-                try {
+                boolean usernameFilter = InputFilterUtils.isValidUsername(username);
+                boolean passwordFilter = InputFilterUtils.isStrongPassword(password); //I should include this below in the future.
 
-                    ResultSet rs = mySQLConnection.selectSQL(username, "username", "tb_account", "");
-                    while (rs.next()) {
-                        Login.passwordHash = rs.getString("PasswordHash");
-                        Login.saltHash = rs.getString("SaltHash");
-                    }
-                    mySQLConnection.closeConnection();
+                if (usernameFilter) {
 
-                } catch (SQLException ex) {throw new RuntimeException(ex);}
+                    try {
+                        ResultSet rs = mySQLConnection.selectSQL(username, "username", "tb_account", "");
+                        if (rs.next()) {
+                            usernameDB = rs.getString("username");
+                            passwordHash = rs.getString("PasswordHash");
+                            saltHash = rs.getString("SaltHash");
 
-                boolean match = PasswordHashers.verifyPassword(password, Login.passwordHash, Login.saltHash);
+                            rs.close(); //Closed the ResultSet (For Select Query only)
+                            mySQLConnection.close(); //Closing MySQL Connection and stmt
 
-                if (match)
-                {
-                    setVisible(false); // this is how to hide form
-                    new Simple_Calculator(); // open new form
-                }
-                else
-                {
-                    alert("INVALID USERNAME OR PASSWORD!");
-                    textField1.setText("");
-                    passwordField1.setText("");
-                }
+                            boolean VP = PasswordHashers.verifyPassword(password, passwordHash, saltHash);
+                            boolean VU = PasswordHashers.verifyUsername(username,usernameDB); //to case-sensitive the username
+                            //example: Admin & admin are different
+
+                            if (VP && VU) {
+                                setVisible(false); // this is how to hide form
+                                new Simple_Calculator(); // open new form
+                            } else { clearInput();}
+
+                        } else {clearInput();}
+                    } catch (SQLException ex) {throw new RuntimeException(ex);}
+
+                } else {clearInput();}
             }
         });
 
@@ -71,5 +76,6 @@ public class Login extends JFrame {
             }
         });
     }
-    public void alert(String data){JOptionPane.showMessageDialog(Login.this, data);} //ALERT LIKE IN JAVA
+    public void alert(String data){JOptionPane.showMessageDialog(this, data);} //ALERT LIKE IN JAVASCRIPT
+    public void clearInput(){alert("INVALID USERNAME OR PASSWORD!");textField1.setText("");passwordField1.setText("");}
 }

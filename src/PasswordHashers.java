@@ -35,6 +35,10 @@ public class PasswordHashers {
         String inputHash = hashPassword(inputPassword.toCharArray(), saltFromDB);
         return storedHash.equals(inputHash);
     }
+
+    public static boolean verifyUsername(String usernameInput, String usernameDB){
+        return usernameDB.equals(usernameInput);
+    }
 /*
     public static void main(String[] args) {
         // Registration (both salt and hashed should be SAVE in database)

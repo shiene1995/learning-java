@@ -167,8 +167,8 @@ public class MySQL {
         return stmt.executeUpdate();
     }
 
-    public void closeConnection() {
-        try {if (conn != null && !conn.isClosed()) {conn.close();}}
+    public void close() {
+        try {if (conn != null && !conn.isClosed()) { stmt.close(); conn.close(); }}
         catch (SQLException e) {throw new RuntimeException(e);}
     }
 
