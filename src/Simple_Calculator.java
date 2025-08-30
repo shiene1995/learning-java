@@ -33,10 +33,13 @@ public class Simple_Calculator extends JFrame {
     public Simple_Calculator(){
         setContentPane(MainPanel); //this is how to call Jpanel
         setTitle("Simple Calculator Apps");
-        setDefaultCloseOperation(EXIT_ON_CLOSE); //WHEN I CLICK CLOSE, THE PROGRAM WILL BE STOP AND NOT RUNNING IN BACKGROUND PROCESSING
+        //setDefaultCloseOperation(EXIT_ON_CLOSE); //WHEN I CLICK CLOSE, THE PROGRAM WILL BE STOP AND NOT RUNNING IN BACKGROUND PROCESSING
+        setResizable(false);
         setSize(400,550);
         setLocationRelativeTo(null);
         setVisible(true);
+        ImageIcon image = new ImageIcon("img/icon.png");
+        setIconImage(image.getImage());
 
         zeroButton.addActionListener(new ActionListener() { // button 0
             @Override
@@ -138,7 +141,7 @@ public class Simple_Calculator extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false); // this is how to hide form
-                new Login(); // open new form
+                //new Login(); // open new form
             }
         });
         clearButton.addActionListener(new ActionListener() { //ERASE ALL

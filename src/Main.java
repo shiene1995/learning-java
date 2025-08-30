@@ -7,7 +7,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         //new Login();
-        new Simple_Calculator();
+        //new Simple_Calculator();
+        new Dashboard();
 
         echo(33); //I shorten the System.out.print();
         echo("Hello");

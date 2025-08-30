@@ -18,9 +18,12 @@ public class Login extends JFrame {
         setContentPane(swing_test_Panel); //this is how to call Jpanel
         setTitle("CIICC Apps");
         setDefaultCloseOperation(EXIT_ON_CLOSE); //WHEN I CLICK CLOSE, THE PROGRAM WILL BE STOP AND NOT RUNNING IN BACKGROUND PROCESSING
+        setResizable(false);
         setSize(400,400);
         setLocationRelativeTo(null);
         setVisible(true);
+        ImageIcon image = new ImageIcon("img/icon.png");
+        setIconImage(image.getImage());
 
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -52,7 +55,7 @@ public class Login extends JFrame {
 
                             if (VP && VU) {
                                 setVisible(false); // this is how to hide form
-                                new Simple_Calculator(); // open new form
+                                new Dashboard(); // open new form
                             } else { clearInput();}
 
                         } else {clearInput();}

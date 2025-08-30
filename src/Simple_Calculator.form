@@ -267,7 +267,7 @@
           <background color="-12763068"/>
           <font size="20" style="1"/>
           <foreground color="-1"/>
-          <text value="Login Form"/>
+          <text value="Close"/>
         </properties>
       </component>
     </children>
