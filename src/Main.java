@@ -15,7 +15,7 @@ public class Main {
         echo(2.0);
 
         MySQL mySQLConnection = new MySQL("db_ciicc");
-        ResultSet rs = mySQLConnection.selectSQL("1","id","tb_account","");
+        ResultSet rs = mySQLConnection.selectSQL("","","tb_account","");
         //ResultSet rs = mySQLConnection.searchSQL("loss", new String[] {"doc_name","doc_used_in"},"tb_documents","");
 
         while (rs.next()){

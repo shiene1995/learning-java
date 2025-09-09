@@ -11,6 +11,13 @@ public class Dashboard extends JFrame {
     private JButton button4;
     private JButton button5;
     private JButton LOGOUTButton;
+    private JTextField SEARCHFIELDTextField;
+    private JButton searchButton;
+    private JButton ADDButton;
+    private JButton UPDATEButton;
+    private JButton DELETEButton;
+    private JTable table1;
+    private JScrollPane TableScrollPane;
 
     public Dashboard(){
         setContentPane(MainPanel); //this is how to call Jpanel
@@ -21,7 +28,10 @@ public class Dashboard extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         ImageIcon image = new ImageIcon("img/icon.png");
-        setIconImage(image.getImage());
+        setIconImage(image.getImage()); //SET WINDOWS ICON
+
+        TableScrollPane.add(table1); //TESTING
+        add(TableScrollPane); //TESTING
 
         logoLabel.setIcon(image);
 
