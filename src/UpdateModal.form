@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="UpdateModal">
+  <grid id="27dc6" binding="UpdateModalPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="20" left="20" bottom="20" right="20"/>
+    <constraints>
+      <xy x="20" y="20" width="872" height="589"/>
+    </constraints>
+    <properties>
+      <preferredSize width="1000" height="134"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="d1f47" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="3">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="93a04" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <font name="Chonburi" size="48" style="1"/>
+              <foreground color="-11635745"/>
+              <horizontalAlignment value="0"/>
+              <preferredSize width="340" height="80"/>
+              <text value="UPDATE"/>
+            </properties>
+          </component>
+          <component id="74aa1" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <preferredSize width="340" height="17"/>
+              <text value="First name"/>
+            </properties>
+          </component>
+          <component id="9d79e" class="javax.swing.JTextField" binding="FnameInput">
+            <constraints/>
+            <properties>
+              <margin top="2" left="9" bottom="2" right="6"/>
+              <preferredSize width="340" height="34"/>
+            </properties>
+          </component>
+          <component id="2a690" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <preferredSize width="340" height="17"/>
+              <text value="Last name"/>
+            </properties>
+          </component>
+          <component id="ffb6d" class="javax.swing.JTextField" binding="LnameInput">
+            <constraints/>
+            <properties>
+              <margin top="2" left="9" bottom="2" right="6"/>
+              <preferredSize width="340" height="34"/>
+            </properties>
+          </component>
+          <component id="fb79a" class="javax.swing.JSeparator">
+            <constraints/>
+            <properties>
+              <preferredSize width="338" height="10"/>
+            </properties>
+          </component>
+          <component id="5e080" class="javax.swing.JButton" binding="UPDATEButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <background color="-11635745"/>
+              <foreground color="-1973761"/>
+              <preferredSize width="340" height="34"/>
+              <text value="UPDATE"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

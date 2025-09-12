@@ -11,9 +11,7 @@ public class MySQL {
         url = "jdbc:mysql://"+host+"/" + dbName + "?useSSL=false&serverTimezone=Asia/Manila";
         databaseUsername = dbUsername;
         databasePassword = dbPassword;
-
-        try {conn = DriverManager.getConnection(url, databaseUsername, databasePassword);}
-        catch (SQLException e) {throw new RuntimeException(e);}
+        conn = DriverManager.getConnection(url, databaseUsername, databasePassword);
     }
 
     public MySQL(String dbName){
@@ -24,11 +22,8 @@ public class MySQL {
         catch (SQLException e) {throw new RuntimeException(e);}
     }
 
-    public ResultSet selectSQL(String data) throws SQLException {
-        try{
-            stmt = conn.prepareStatement(data);
-            return stmt.executeQuery();
-        } catch (SQLException e) {throw new RuntimeException(e);}
+    public ResultSet selectSQL(String table) throws SQLException {
+        return selectSQL("", "", table, "");
     }
 
     /*
@@ -48,24 +43,27 @@ public class MySQL {
      */
     public ResultSet selectSQL(String data, String column, String table, String addQuery) throws SQLException {
 
-        if (data.isEmpty() && column.isEmpty() && addQuery.isEmpty())
-        {
-            stmt = conn.prepareStatement("SELECT * FROM "+ table);
+            if (data.isEmpty() && column.isEmpty() && addQuery.isEmpty()) {
+                stmt = conn.prepareStatement("SELECT * FROM " + table);
+                return stmt.executeQuery();
+            }
+
+            if (!data.isEmpty() && !column.isEmpty()) {
+                query = "SELECT * FROM " + table + " WHERE " + column + " = ?";
+            }
+
+            if (!addQuery.isEmpty()) {
+                query += " " + addQuery;
+            }
+
+            if (!data.isEmpty() && !column.isEmpty()) {
+                stmt = conn.prepareStatement(query);
+                stmt.setString(1, data);
+            } else {
+                stmt = conn.prepareStatement("SELECT * FROM " + table + query);
+            }
+
             return stmt.executeQuery();
-        }
-
-        if (!data.isEmpty() && !column.isEmpty()) {query = "SELECT * FROM "+ table + " WHERE " + column + " = ?";}
-
-        if (!addQuery.isEmpty()) {query += " " + addQuery;}
-
-        if (!data.isEmpty() && !column.isEmpty())
-        {
-            stmt = conn.prepareStatement(query);
-            stmt.setString(1, data);
-        }
-        else {stmt = conn.prepareStatement("SELECT * FROM " + table + query);}
-
-        return stmt.executeQuery();
     }
 
     /*
@@ -76,29 +74,32 @@ public class MySQL {
      */
     public ResultSet searchSQL(String data, String[] column, String table, String addQuery) throws SQLException {
 
-        String[] whereClause = new String[column.length];
+            String[] whereClause = new String[column.length];
 
-        if (data.isEmpty() && column.length == 0 && addQuery.isEmpty())
-        {
-            stmt = conn.prepareStatement("SELECT * FROM "+ table);
+            if (data.isEmpty() && column.length == 0 && addQuery.isEmpty()) {
+                stmt = conn.prepareStatement("SELECT * FROM " + table);
+                return stmt.executeQuery();
+            }
+
+            if (!data.isEmpty() && column.length != 0) {
+                for (int x = 0; x < column.length; x++) {
+                    whereClause[x] = column[x] + " LIKE ?";
+                }
+                whereSQL = String.join(" OR ", whereClause);
+            }
+
+            if (!addQuery.isEmpty()) {
+                whereSQL += " " + addQuery;
+            }
+
+            if (!data.isEmpty() && column.length != 0) {
+                stmt = conn.prepareStatement("SELECT * FROM " + table + " WHERE " + whereSQL);
+                for (int x = 1; x <= column.length; x++) {
+                    stmt.setString(x, "%" + data + "%");
+                }
+            }
+
             return stmt.executeQuery();
-        }
-
-        if (!data.isEmpty() && column.length != 0)
-        {
-            for (int x=0; x < column.length; x++) {whereClause[x] = column[x] + " LIKE ?";}
-            whereSQL = String.join(" OR ", whereClause);
-        }
-
-        if (!addQuery.isEmpty()) {whereSQL += " " + addQuery;}
-
-        if (!data.isEmpty() && column.length != 0)
-        {
-            stmt = conn.prepareStatement("SELECT * FROM "+table+" WHERE "+whereSQL);
-            for (int x=1; x <= column.length; x++) {stmt.setString(x, "%" + data + "%");}
-        }
-
-        return stmt.executeQuery();
     }
 
     /*
@@ -108,24 +109,25 @@ public class MySQL {
             - if (rs > 0){echo("UPDATE SUCCESS");}
     */
     public int insertSQL(String[] data, String[] column, String table) throws SQLException {
-        String[] binding = new String[column.length];
 
-        if (data.length != column.length) {
-            throw new IllegalArgumentException("Data and column arrays must be the same length.");
-        }
+            String[] binding = new String[column.length];
 
-        for (int x=0; x < column.length; x++) {
-            binding[x] = "?";
-        }
-        whereSQL = String.join(", ", binding);
-        tableBind = String.join(", ", column);
-        stmt = conn.prepareStatement("INSERT INTO "+table+" ("+tableBind+") VALUES ("+whereSQL+")");
+            if (data.length != column.length) {
+                throw new IllegalArgumentException("Data and column arrays must be the same length.");
+            }
 
-        for (int x=1; x <= column.length; x++) {
-            stmt.setString(x, data[x-1]);
-        }
+            for (int x=0; x < column.length; x++) {
+                binding[x] = "?";
+            }
+            whereSQL = String.join(", ", binding);
+            tableBind = String.join(", ", column);
+            stmt = conn.prepareStatement("INSERT INTO "+table+" ("+tableBind+") VALUES ("+whereSQL+")");
 
-        return stmt.executeUpdate();
+            for (int x=1; x <= column.length; x++) {
+                stmt.setString(x, data[x-1]);
+            }
+
+            return stmt.executeUpdate();
     }
 
     /*
@@ -135,24 +137,25 @@ public class MySQL {
             - if (rs > 0){echo("UPDATE SUCCESS");}
      */
     public int updateSQL(String[] data, String[] column, String table, String id) throws SQLException {
-        String[] whereClause = new String[column.length];
 
-        if (data.length != column.length) {
-            throw new IllegalArgumentException("Data and column arrays must be of the same length.");
-        }
+            String[] whereClause = new String[column.length];
 
-        for (int x=0; x < column.length; x++) {
-            whereClause[x] = column[x] + " = ?";
-        }
-        whereSQL = String.join(", ", whereClause);
+            if (data.length != column.length) {
+                throw new IllegalArgumentException("Data and column arrays must be of the same length.");
+            }
 
-        stmt = conn.prepareStatement("UPDATE "+table+" SET "+whereSQL+" WHERE id = ?");
-        for (int x=1; x <= column.length; x++) {
-            stmt.setString(x, data[x-1]);
-        }
-        stmt.setString(column.length+1, id);
+            for (int x = 0; x < column.length; x++) {
+                whereClause[x] = column[x] + " = ?";
+            }
+            whereSQL = String.join(", ", whereClause);
 
-        return stmt.executeUpdate();
+            stmt = conn.prepareStatement("UPDATE " + table + " SET " + whereSQL + " WHERE id = ?");
+            for (int x = 1; x <= column.length; x++) {
+                stmt.setString(x, data[x - 1]);
+            }
+            stmt.setString(column.length + 1, id);
+
+            return stmt.executeUpdate();
     }
 
     /*
@@ -162,14 +165,31 @@ public class MySQL {
             - if (rs > 0){echo("DELETE SUCCESS");}
     */
     public int deleteSQL(String id, String table) throws SQLException {
-        stmt = conn.prepareStatement("DELETE FROM "+table+" WHERE id = ?");
-        stmt.setString(1, id);
-        return stmt.executeUpdate();
+
+            stmt = conn.prepareStatement("DELETE FROM " + table + " WHERE id = ?");
+            stmt.setString(1, id);
+            return stmt.executeUpdate();
     }
 
     public void close() {
-        try {if (conn != null && !conn.isClosed()) { stmt.close(); conn.close(); }}
-        catch (SQLException e) {throw new RuntimeException(e);}
+        try {
+            if (stmt != null) {
+                stmt.close();
+            }
+        } catch (SQLException e) {
+            // Log the exception, but don't re-throw it.
+            // We still want to try to close the connection.
+            System.err.println("Error closing statement: " + e.getMessage());
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                // Log the exception.
+                System.err.println("Error closing connection: " + e.getMessage());
+            }
+        }
     }
 
 }

@@ -30,17 +30,16 @@ public class Login extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 MySQL mySQLConnection = new MySQL("db_ciicc"); //CREATE CONNECTION TO MySQL
 
-                String username = usernameInput.getText(); //this is how to get data in textfield
                 char[] passwordChars = passwordInput.getPassword(); //this is how to get data in passwordField
-                String password = new String(passwordChars); //converting characters to String
+                //String password = new String(passwordChars); //converting characters to String
 
-                boolean usernameFilter = InputFilterUtils.isValidUsername(username);
-                boolean passwordFilter = InputFilterUtils.isStrongPassword(password); //I should include this below in the future.
+                boolean usernameFilter = InputFilterUtils.isValidUsername(usernameInput.getText());
+                //boolean passwordFilter = InputFilterUtils.isStrongPassword(new String(passwordChars)); //I should include this below in the future.
 
                 if (usernameFilter) {
 
                     try {
-                        ResultSet rs = mySQLConnection.selectSQL(username, "username", "tb_account", "");
+                        ResultSet rs = mySQLConnection.selectSQL(usernameInput.getText(), "username", "tb_account", "");
                         if (rs.next()) {
                             usernameDB = rs.getString("username");
                             passwordHash = rs.getString("PasswordHash");
@@ -49,12 +48,12 @@ public class Login extends JFrame {
                             rs.close(); //Closed the ResultSet (For Select Query only)
                             mySQLConnection.close(); //Closing MySQL Connection and stmt
 
-                            boolean VP = PasswordHashers.verifyPassword(password, passwordHash, saltHash);
-                            boolean VU = PasswordHashers.verifyUsername(username,usernameDB); //to case-sensitive the username
+                            boolean VP = PasswordHashers.verifyPassword(new String(passwordChars), passwordHash, saltHash);
+                            boolean VU = PasswordHashers.verifyUsername(usernameInput.getText(),usernameDB); //to case-sensitive the username
                             //example: Admin & admin are different
 
                             if (VP && VU) {
-                                setVisible(false); // this is how to hide form
+                                dispose(); // this is how to hide form
                                 new Dashboard(); // open new form
                             } else { clearInput();}
 
@@ -79,6 +78,5 @@ public class Login extends JFrame {
         });
     }
     public void alert(String data){JOptionPane.showMessageDialog(this, data);} //ALERT LIKE IN JAVASCRIPT
-    public void clearInput(){alert("INVALID USERNAME OR PASSWORD!");
-        usernameInput.setText("");passwordInput.setText("");}
+    public void clearInput(){alert("INVALID USERNAME OR PASSWORD!");usernameInput.setText("");passwordInput.setText("");}
 }
