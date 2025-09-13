@@ -24,7 +24,6 @@ public class Dashboard extends JFrame {
     private JButton DELETEButton;
     private JTable table1;
     private JScrollPane TableScrollPane;
-    private JButton refreshButton;
     static ResultSet rs;
 
     private ArrayList<Object[]> dataList = new ArrayList<>();
@@ -63,24 +62,19 @@ public class Dashboard extends JFrame {
                 new Login();
             }
         });
+
         ADDButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AddModal();
+                new AddModal(Dashboard.this);
             }
         });
-        refreshButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //alert(""+table1.getSelectedRow()+" : "+table1.getSelectedColumn()+" : "+table1.getValueAt(table1.getSelectedRow(),0));
-                showDataTable("");
-            }
-        });
+
         UPDATEButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (table1.getSelectedRow() > 0) {
-                    new UpdateModal((int) table1.getValueAt(table1.getSelectedRow(), 0), table1.getValueAt(table1.getSelectedRow(), 1).toString(), table1.getValueAt(table1.getSelectedRow(), 2).toString());
+                if (table1.getSelectedRow() > -1) {
+                    new UpdateModal((int) table1.getValueAt(table1.getSelectedRow(), 0), table1.getValueAt(table1.getSelectedRow(), 1).toString(), table1.getValueAt(table1.getSelectedRow(), 2).toString(), Dashboard.this);
                 } else { alert("PLEASE SELECT IN TABLE!"); }
             }
         });
@@ -128,8 +122,6 @@ public class Dashboard extends JFrame {
     }
 
     public void showDataTable(String searchData) {
-        //ArrayList<Object[]> dataList = new ArrayList<>();
-        //DefaultTableModel model = new DefaultTableModel();
         try {
             MySQL mySQLConnection = new MySQL("db_ciicc"); //DB Connection
 
@@ -162,17 +154,6 @@ public class Dashboard extends JFrame {
         } catch (SQLException ex) {throw new RuntimeException(ex);}
     }
 
-    public void refresh() {
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                SwingUtilities.invokeLater(() -> {
-                    showDataTable("");
-                });
-            }
-        }, 5000, 5000); // Start immediately (5000 ms delay), repeat every 5000 ms
-    }
     public void alert(String data){JOptionPane.showMessageDialog(this, data);} //ALERT LIKE IN JAVASCRIPT
     public int alertDelete(String data){return JOptionPane.showConfirmDialog(this, data, "Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);} //ALERT LIKE IN JAVASCRIPT
 }
